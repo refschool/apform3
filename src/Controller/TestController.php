@@ -21,7 +21,7 @@ class TestController extends AbstractController
      *  */
     public function test()
     {
-        $tab = ["toto\n\n\n",  "tata\n"];
+        $tab = ["toto",  "tata"];
 
         return $this->render(
             'test.html.twig',

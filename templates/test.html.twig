@@ -1,9 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="container">
+    <div class="row" style="border:1px solid black">
+        <div class="col" style="border:1px solid red">
+            {% for item in tab %}
+            {{ item }} <br>
+            {% endfor %}
+        </div>
 
-{% for item in tab %}
-{{ item | nl2br }} <br>
-{% endfor %}
+        <div class="col" style="border:1px solid red">
+            {% for item in tab %}
+            {{ item  }} <br>
+            {% endfor %}
+        </div>
+
+        <div class="col" style="border:1px solid red">
+            {% for item in tab %}
+            {{ item  }} <br>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
 
 {% endblock %}
