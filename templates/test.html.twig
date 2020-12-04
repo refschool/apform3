@@ -4,22 +4,19 @@
 <div class="container">
     <div class="row" style="border:1px solid black">
         <div class="col" style="border:1px solid red">
-            {% for item in tab %}
-            {{ item }} <br>
-            {% endfor %}
+            {#dump(products)#}
+
+            {% for item in products %}
+            {{item.name}} / {{item.price}} / {{item.slug}} <br>
+            <br>
+            <br>
+            {% endfor  %}
         </div>
 
         <div class="col" style="border:1px solid red">
-            {% for item in tab %}
-            {{ item  }} <br>
-            {% endfor %}
+
         </div>
 
-        <div class="col" style="border:1px solid red">
-            {% for item in tab %}
-            {{ item  }} <br>
-            {% endfor %}
-        </div>
     </div>
 
 </div>

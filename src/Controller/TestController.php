@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TestController extends AbstractController
 {
@@ -19,13 +20,13 @@ class TestController extends AbstractController
     /**
      * @Route("/test",name="test")
      *  */
-    public function test()
+    public function test(ProductRepository $productRepository)
     {
-        $tab = ["toto",  "tata"];
+        $products = $productRepository->findAll();
 
         return $this->render(
             'test.html.twig',
-            ['tab' => $tab]
+            ['products' => $products]
         );
     }
 }
