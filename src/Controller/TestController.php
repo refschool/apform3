@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TestController extends AbstractController
 {
+
     /**
      * @Route("/",name="index")
      *  */
@@ -32,15 +34,10 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/category",name="category")
+     * @Route("/success",name="success")
      *  */
-    public function category(CategoryRepository $categoryRepository)
+    public function success()
     {
-        $category = $categoryRepository->find(1);
-
-        return $this->render(
-            'category.html.twig',
-            ['products' => $category]
-        );
+        return $this->render('success.html.twig');
     }
 }
