@@ -13,6 +13,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
 {
+
+
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+
     /**
      * @Route("/category", name="category")
      */
@@ -38,15 +48,20 @@ class CategoryController extends AbstractController
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($category);
             $em->flush();
 
             return $this->redirectToRoute('success');
         }
-
-
         return $this->render('category/add.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/category/edit/{slug}",name="editCategory")
+     */
+    public function editCategory(Request $request, Category $category)
+    {
+        dd($category);
     }
 }
