@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Form\ProductFormType;
 use App\Repository\ProductRepository;
-use App\Repository\CategoryRepository;
 
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,17 +74,42 @@ class ProductController extends AbstractController
                 ->setCategory($data['category']);
 
             $em->persist($product);
+
+
+
             $em->flush();
 
             return $this->redirectToRoute('success');
         }
 
+        return $this->render('product/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
 
 
+    /**
+     * @Route("/product/edit/{id}",name="editProduit")
+     */
+    public function editProduct(Request $request, EntityManagerInterface $em, $id): Response
+    {
+        $product = new Product;
+        $product = $em->getRepository(Product::class)->find($id);
 
+        $form = $this->createForm(FormType::class, $product);
 
-        return $this->render('product/index.html.twig', [
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $product = $form->getData();
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirectToRoute('success');
+        }
+
+        return $this->render('product/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
