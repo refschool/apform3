@@ -17,15 +17,31 @@
     }
 </style>
 
-<div class="example-wrapper">
+<div class="container">
 
+    <table class="table">
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Editer</th>
+            <th>Effacer</th>
+        </tr>
+        {% for category in listeCategory %}
+        <tr>
+            <td>{{category.name}}</td>
+            <td>{{category.description}}</td>
+            <td>{{category.slug}}</td>
+            <td><a href="{{path('editCategory',{'id':category.id})}}">
+                    Editer catégorie</a>
+            </td>
+            <td>??</td>
+        </tr>
 
-    {% for category in listeCategory %}
+        <br>
 
-    {{category.name}} / {{category.description}} / {{category.slug}} <br>
-    <br>
-
-    {% endfor  %}
+        {% endfor  %}
+    </table>
 
 
 </div>

@@ -21,6 +21,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
     /**
+     * @Route("/detailProduit/{id}", name="detailProduit")
+     */
+    public function index(ProductRepository $productRepository): Response
+    {
+
+        $listeProduit = $productRepository->findAll();
+
+        return $this->render('product/index.html.twig', [
+            'listeProduit' => $listeProduit,
+        ]);
+    }
+
+
+
+    /**
      * @Route("/product/add",name="ajoutProduit")
      */
     public function addProduct(Request $request, EntityManagerInterface $em): Response
