@@ -32,6 +32,7 @@ class Product
      */
     private $slug;
 
+
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
      */
