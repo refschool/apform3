@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Liste des catégorie!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <table class="table">
+        <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Editer</th>
+            <th>Effacer</th>
+        </tr>
+        {% for produit in listeProduit %}
+        <tr>
+            <td><a href="{{path('categoryProduct',{'id':produit.id})}}">{{produit.name}}</a></td>
+            <td>{{produit.price}}</td>
+            <td><a href="{{path('editProduit',{'id':produit.id})}}">
+                    Editer Produit</a>
+            </td>
+
+        </tr>
+
+        <br>
+
+        {% endfor  %}
+    </table>
+
+
+</div>
+{% endblock %}

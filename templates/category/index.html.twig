@@ -29,7 +29,7 @@
         </tr>
         {% for category in listeCategory %}
         <tr>
-            <td>{{category.name}}</td>
+            <td><a href="{{path('categoryProduct',{'id':category.id})}}">{{category.name}}</a></td>
             <td>{{category.description}}</td>
             <td>{{category.slug}}</td>
             <td><a href="{{path('editCategory',{'id':category.id})}}">
