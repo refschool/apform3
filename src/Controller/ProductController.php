@@ -30,7 +30,7 @@ class ProductController extends AbstractController
      */
     public function addProduct(KernelInterface $appKernel, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
-        //$path = $appKernel->getProjectDir() . '/public';
+        //$path = $appKernel->getProjectDir() . '/public/img';
 
         $path = $this->getParameter('app.dir.public') . '/img';
 
@@ -61,8 +61,6 @@ class ProductController extends AbstractController
                 }
             }
 
-
-
             $em->persist($product);
             $em->flush();
 
@@ -79,12 +77,39 @@ class ProductController extends AbstractController
      */
     public function editProduct(Request $request, EntityManagerInterface $em, $id): Response
     {
+        $path = $this->getParameter('app.dir.public') . '/img';
+
+
         $product = $em->getRepository(Product::class)->find($id);
+
+
         $form = $this->createForm(ProductFormType::class, $product);
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
+
+            $file = $form['img']->getData();
+            if ($file) {
+                // récup nom de fichier sans extension
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $file->guessExtension();
+                // set nom dans la propriété Img
+                $product->setImg($newFilename);
+
+                //Déplacer le fichier dans le répertoire public + sous répertoire
+                try {
+                    $file->move($path, $newFilename);
+                } catch (FileException $e) {
+                    echo $e->getMessage();
+                }
+            }
+
+
+
             $em->persist($product);
             $em->flush();
             return $this->redirectToRoute('success');
