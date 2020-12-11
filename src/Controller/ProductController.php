@@ -91,7 +91,7 @@ class ProductController extends AbstractController
      */
     public function editProduct(Request $request, EntityManagerInterface $em, $id): Response
     {
-        $product = new Product;
+
         $product = $em->getRepository(Product::class)->find($id);
 
         $form = $this->createForm(ProductFormType::class, $product);
@@ -109,5 +109,20 @@ class ProductController extends AbstractController
         return $this->render('product/edit.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/product/delete/{id}",name="deleteProduit")
+     */
+    public function deleteProduct(Product $product, $id, EntityManagerInterface $em)
+    {
+        // public function deleteProduct(ProductRepository $productRepository, $id, EntityManagerInterface $em)
+
+        //$product = $productRepository->find($id);
+        // paramConverter
+        $em->remove($product);
+        $em->flush();
+
+        return $this->redirectToRoute('success');
     }
 }
