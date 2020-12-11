@@ -24,6 +24,7 @@ class ProductFormType extends AbstractType
             ->add('slug', TextType::class)
             ->add('img', FileType::class, [
                 'required' => false,
+                'mapped' => false,
                 'label' => 'Image produit',
                 'attr' => [
                     'placeholder' => 'Placeholder Image produit',
@@ -36,7 +37,7 @@ class ProductFormType extends AbstractType
                             'image/png',
                         ],
                         'mimeTypesMessage' => 'Merci de charger une jpg/png',
-                        'uploadFormSizeErrorMessage' => 'Taille maximale de fichier 4 Méga'
+                        'uploadFormSizeErrorMessage' => 'Taille maximale de fichier 4 Méga',
                     ])
                 ],
 
