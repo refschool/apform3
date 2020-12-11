@@ -75,25 +75,19 @@ class ProductController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @Route("/product/edit/{id}",name="editProduit")
      */
     public function editProduct(Request $request, EntityManagerInterface $em, $id): Response
     {
-
         $product = $em->getRepository(Product::class)->find($id);
-
         $form = $this->createForm(ProductFormType::class, $product);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
             $em->persist($product);
             $em->flush();
-
             return $this->redirectToRoute('success');
         }
 
