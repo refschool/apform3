@@ -4,29 +4,46 @@
 
 {% block body %}
 
+
+
+
 <div class="container">
-    {{yvon}}
-    {{ form_start(form)}}
+    {{ yvon }}
+    {{ form_start(form) }}
 
     {{ form_row(form._token) }}
 
-    {{ form_label(form.name,'nom produit') }}
+    {{ form_label(form.name, 'nom produit') }}
     {{ form_widget(form.name,{'attr':{'maxlength':'50'}}) }}
 
-    {{ form_label(form.price,'Prix produit') }}
+    {{ form_label(form.price, 'Prix produit') }}
     {{ form_widget(form.price,{'attr':{'maxlength':'50'}}) }}
 
-    {{ form_label(form.img,'') }}
+    {{ form_label(form.img, '') }}
     {{ form_widget(form.img,{'attr':{'maxlength':'255'}}) }}
 
-    {{ form_label(form.category,'Catégorie') }}
+    {{ form_label(form.category, 'Catégorie') }}
     {{ form_widget(form.category)}}
 
-    {{ form_label(form.save,'Ajouter produit') }}
+    {{ form_label(form.save, 'Ajouter produit') }}
     {{ form_widget(form.save) }}
 
-    {{ form_end(form, {'render_rest': false}) }}
+    {{ form_end(form, { 'render_rest': false}) }}
 
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var fichierRecto = document.querySelector('#product_form_img')
+        var labelRecto = fichierRecto.nextElementSibling
+
+        fichierRecto.addEventListener('change', function (e) {
+            const fileName = fichierRecto.value;
+            labelRecto.innerHTML = fileName;
+        })
+
+    });
+</script>
+
 {% endblock %}
