@@ -5,14 +5,10 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Category;
 use App\Form\ProductFormType;
-use App\Repository\ProductRepository;
-
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,14 +20,12 @@ class ProductController extends AbstractController
     /**
      * @Route("/detailProduit/{id}", name="detailProduit")
      */
-    public function index(Product $product, $id, EntityManagerInterface $em): Response
+    public function index(Product $product): Response
     {
         return $this->render('product/detailProduit.html.twig', [
             'product' => $product,
         ]);
     }
-
-
 
     /**
      * @Route("/product/add",name="ajoutProduit")
@@ -111,7 +105,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/delete/{id}",name="deleteProduit")
      */
-    public function deleteProduct(Product $product, $id, EntityManagerInterface $em)
+    public function deleteProduct(Product $product, EntityManagerInterface $em)
     {
         // public function deleteProduct(ProductRepository $productRepository, $id, EntityManagerInterface $em)
 
