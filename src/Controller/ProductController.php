@@ -50,7 +50,7 @@ class ProductController extends AbstractController
                 EntityType::class,
                 [
                     'class' => Category::class,
-                    'choice_label' => 'name',
+                    'choice_label' => 'description',
                     'placeholder' => 'Choisir une catégorie',
                     'label' => 'Catégorie',
                 ]
@@ -74,9 +74,6 @@ class ProductController extends AbstractController
                 ->setCategory($data['category']);
 
             $em->persist($product);
-
-
-
             $em->flush();
 
             return $this->redirectToRoute('success');
@@ -97,7 +94,7 @@ class ProductController extends AbstractController
         $product = new Product;
         $product = $em->getRepository(Product::class)->find($id);
 
-        $form = $this->createForm(FormType::class, $product);
+        $form = $this->createForm(ProductFormType::class, $product);
 
         $form->handleRequest($request);
 
