@@ -32,38 +32,12 @@ class ProductController extends AbstractController
      */
     public function addProduct(Request $request, EntityManagerInterface $em): Response
     {
-        $builder = $this->createFormBuilder();
-        $builder->add('name', TextType::class)
-            ->add('price', IntegerType::class)
-            ->add('slug', TextType::class)
-            ->add(
-                'category',
-                EntityType::class,
-                [
-                    'class' => Category::class,
-                    'choice_label' => 'description',
-                    'placeholder' => 'Choisir une catégorie',
-                    'label' => 'Catégorie',
-                ]
-            )
-            ->add(
-                'save',
-                SubmitType::class,
-                ['label' => 'Ajouter Produit']
-            );
-
-        $form = $builder->getForm();
+        $product = new Product;
+        $form = $this->createForm(ProductFormType::class, $product);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $product = new Product;
-            $product->setName($data['name'])
-                ->setPrice($data['price'])
-                ->setSlug($data['slug'])
-                ->setCategory($data['category']);
-
             $em->persist($product);
             $em->flush();
 
