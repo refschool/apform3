@@ -8,6 +8,8 @@
 
     {{ form_start(form)}}
 
+    {{ form_row(form._token) }}
+
     {{ form_label(form.name,'nom produit') }}
     {{ form_widget(form.name,{'attr':{'maxlength':'50'}}) }}
 

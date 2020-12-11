@@ -3,16 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Entity\Category;
 use App\Form\ProductFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
@@ -30,14 +26,18 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/add",name="ajoutProduit")
      */
-    public function addProduct(Request $request, EntityManagerInterface $em): Response
+    public function addProduct(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
+
         $product = new Product;
         $form = $this->createForm(ProductFormType::class, $product);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $product->setSlug($slugger->slug($product->getName()));
+
             $em->persist($product);
             $em->flush();
 
