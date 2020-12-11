@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Product!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top"
+                    src="https://c2.lestechnophiles.com/images.frandroid.com/wp-content/uploads/2019/04/iphone-x-final.png?resize=580,580"
+                    alt="Dét" width="500">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text">{{product.price}}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

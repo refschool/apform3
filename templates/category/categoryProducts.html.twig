@@ -15,7 +15,7 @@
         </tr>
         {% for produit in listeProduit %}
         <tr>
-            <td><a href="{{path('categoryProduct',{'id':produit.id})}}">{{produit.name}}</a></td>
+            <td><a href="{{path('detailProduit',{'id':produit.id})}}">{{produit.name}}</a></td>
             <td>{{produit.price}}</td>
             <td><a href="{{path('editProduit',{'id':produit.id})}}">
                     Editer Produit</a>

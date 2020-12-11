@@ -24,13 +24,10 @@ class ProductController extends AbstractController
     /**
      * @Route("/detailProduit/{id}", name="detailProduit")
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(Product $product, $id, EntityManagerInterface $em): Response
     {
-
-        $listeProduit = $productRepository->findAll();
-
-        return $this->render('product/index.html.twig', [
-            'listeProduit' => $listeProduit,
+        return $this->render('product/detailProduit.html.twig', [
+            'product' => $product,
         ]);
     }
 
