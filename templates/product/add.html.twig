@@ -5,10 +5,10 @@
 {% block body %}
 
 <div class="container">
-
+    {{yvon}}
     {{ form_start(form)}}
 
-    {# {{ form_row(form._token) }} #}
+    {{ form_row(form._token) }}
 
     {{ form_label(form.name,'nom produit') }}
     {{ form_widget(form.name,{'attr':{'maxlength':'50'}}) }}
@@ -16,7 +16,7 @@
     {{ form_label(form.price,'Prix produit') }}
     {{ form_widget(form.price,{'attr':{'maxlength':'50'}}) }}
 
-    {{ form_label(form.img,'Image') }}
+    {{ form_label(form.img,'') }}
     {{ form_widget(form.img,{'attr':{'maxlength':'255'}}) }}
 
     {{ form_label(form.category,'Catégorie') }}

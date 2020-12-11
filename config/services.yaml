@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 
 parameters:
-
+    locale: 'fr'
+    app.dir.public: '%kernel.project_dir%/public/'
 
 services:
     # default configuration for services in *this* file

@@ -30,7 +30,10 @@ class ProductController extends AbstractController
      */
     public function addProduct(KernelInterface $appKernel, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
-        $path  = $appKernel->getProjectDir() . '/public';
+        //$path = $appKernel->getProjectDir() . '/public';
+
+        $path = $this->getParameter('app.dir.public') . '/img';
+
         $product = new Product;
         $form = $this->createForm(ProductFormType::class, $product);
 
@@ -43,21 +46,22 @@ class ProductController extends AbstractController
             $file = $form['img']->getData();
 
             if ($file) {
+                // récup nom de fichier sans extension
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
                 $newFilename = $originalFilename . '-' . uniqid() . '.' . $file->guessExtension();
-                //set filename
+                // set nom dans la propriété Img
                 $product->setImg($newFilename);
 
-                // Move the file to the directory where brochures are stored
+                //Déplacer le fichier dans le répertoire public + sous répertoire
                 try {
-                    $file->move(
-                        $path,
-                        $newFilename
-                    );
+                    $file->move($path, $newFilename);
                 } catch (FileException $e) {
                     echo $e->getMessage();
                 }
-            };
+            }
+
+
 
             $em->persist($product);
             $em->flush();
