@@ -20,5 +20,18 @@
                 <a class="nav-link" href="{{path('ajoutCategory')}}">Ajout Categorie</a>
             </li>
         </ul>
+        <div class="form-inline my-2 my-lg-0">
+            {% if app.user %}
+
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="{{ path('app_logout')}}">Se
+                    déconnecter de {{ app.user.email}}</a></button>
+            {% endif %}
+
+            {% if not app.user %}
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a
+                    href="{{ path('app_login')}}">Connexion</a></button>
+            {% endif %}
+        </div>
+
     </div>
 </nav>
