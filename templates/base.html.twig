@@ -13,6 +13,12 @@
 <body>
     {{ include('nav.html.twig') }}
 
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message | raw }}
+
+    </div>
+    {% endfor %}
     {% block body %}{% endblock %}
 
 

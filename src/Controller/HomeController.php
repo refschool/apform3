@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Entity\Category;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,11 +15,24 @@ class HomeController extends AbstractController
 {
 
     /**
-     * @Route("/produit/{id}-{slug}", name="vueProduit")
+     * Lister tous les produit toute catégorie confondue
+     * @Route("/",name="index")
+     *  */
+    public function index(EntityManagerInterface $em)
+    {
+        //Lister les produits
+        $listeProduit = $em->getRepository(Product::class)->findAll();
+
+        return $this->render('index.html.twig', ['liste' => $listeProduit]);
+    }
+
+
+
+    /**
+     * @Route("/produit/{id}", name="vueProduit")
      */
     public function detailProduit(Product $product): Response
     {
-
         return $this->render('product/detailProduit.html.twig', [
             'product' => $product,
         ]);
@@ -26,26 +40,6 @@ class HomeController extends AbstractController
 
 
 
-    /**
-     * @Route("/",name="index")
-     *  */
-    public function index()
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
-     * @Route("/test",name="test")
-     *  */
-    public function test(ProductRepository $productRepository)
-    {
-        $products = $productRepository->findAll();
-
-        return $this->render(
-            'test.html.twig',
-            ['products' => $products]
-        );
-    }
 
     /**
      * @Route("/success",name="success")

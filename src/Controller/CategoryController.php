@@ -60,6 +60,8 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
 
+            $this->addFlash('success', 'succès');
+
             return $this->redirectToRoute('success');
         }
 

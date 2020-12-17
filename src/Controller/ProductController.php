@@ -18,15 +18,16 @@ class ProductController extends AbstractController
 
 
     /**
+     * liste le produits d'une catégorie
      * @Route("/admin/product/detail/{id}", name="detailProduit")
      */
-    // public function detailProduit(Product $product): Response
-    // {
+    public function categoryProductList(Product $product): Response
+    {
 
-    //     return $this->render('product/detailProduit.html.twig', [
-    //         'product' => $product,
-    //     ]);
-    // }
+        return $this->render('product/detailProduit.html.twig', [
+            'product' => $product,
+        ]);
+    }
 
 
 
