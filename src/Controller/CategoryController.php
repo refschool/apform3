@@ -15,13 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     /**
+     * Liste des catégorie deu site
      * @Route("/admin/category", name="category")
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-
         $listeCategory = $categoryRepository->findAll();
-
         return $this->render('category/index.html.twig', [
             'listeCategory' => $listeCategory,
         ]);
@@ -60,9 +59,9 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
 
-            $this->addFlash('success', 'succès');
+            $this->addFlash('success', 'Catégorie ajoutée avec succès');
 
-            return $this->redirectToRoute('success');
+            return $this->redirectToRoute('category');
         }
 
 

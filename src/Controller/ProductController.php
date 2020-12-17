@@ -23,7 +23,6 @@ class ProductController extends AbstractController
      */
     public function categoryProductList(Product $product): Response
     {
-
         return $this->render('product/detailProduit.html.twig', [
             'product' => $product,
         ]);
@@ -50,6 +49,9 @@ class ProductController extends AbstractController
             $product->setSlug($slugger->slug($product->getName()));
 
             $file = $form['img']->getData();
+            $idCategory = $form['category']->getData()->getId();
+            //dd($idCategory);
+
 
             if ($file) {
                 // récup nom de fichier sans extension
@@ -70,7 +72,9 @@ class ProductController extends AbstractController
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute('success');
+            $this->addFlash('success', 'Produit ajouté avec succès');
+
+            return $this->redirectToRoute('detailProduit', ['id' => $idCategory]);
         }
 
         return $this->render('product/add.html.twig', [

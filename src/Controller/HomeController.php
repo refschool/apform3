@@ -29,7 +29,7 @@ class HomeController extends AbstractController
 
 
     /**
-     * @Route("/produit/{id}", name="vueProduit")
+     * @Route("/produit/{id}-{slug}", name="vueProduit")
      */
     public function detailProduit(Product $product): Response
     {
