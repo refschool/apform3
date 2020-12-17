@@ -74,7 +74,7 @@ class ProductController extends AbstractController
 
             $this->addFlash('success', 'Produit ajouté avec succès');
 
-            return $this->redirectToRoute('detailProduit', ['id' => $idCategory]);
+            return $this->redirectToRoute('categoryProduct', ['id' => $idCategory]);
         }
 
         return $this->render('product/add.html.twig', [

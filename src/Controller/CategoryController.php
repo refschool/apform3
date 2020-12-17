@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     /**
-     * Liste des catégorie deu site
+     * Liste des catégorie du site
      * @Route("/admin/category", name="category")
      */
     public function index(CategoryRepository $categoryRepository): Response
