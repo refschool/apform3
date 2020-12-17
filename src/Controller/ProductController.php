@@ -138,10 +138,15 @@ class ProductController extends AbstractController
         // public function deleteProduct(ProductRepository $productRepository, $id, EntityManagerInterface $em)
 
         //$product = $productRepository->find($id);
+        $idCategory = $product->getCategory()->getId(); //comment trouver l'id category ?
+
+
         // paramConverter
         $em->remove($product);
         $em->flush();
 
-        return $this->redirectToRoute('success');
+        $this->addFlash('success', 'Produit effacé avec succès');
+
+        return $this->redirectToRoute('categoryProduct', ['id' => $idCategory]);
     }
 }
