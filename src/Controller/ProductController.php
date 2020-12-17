@@ -15,18 +15,23 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ProductController extends AbstractController
 {
-    /**
-     * @Route("/detailProduit/{id}", name="detailProduit")
-     */
-    public function index(Product $product): Response
-    {
-        return $this->render('product/detailProduit.html.twig', [
-            'product' => $product,
-        ]);
-    }
+
 
     /**
-     * @Route("/product/add",name="ajoutProduit")
+     * @Route("/admin/product/detail/{id}", name="detailProduit")
+     */
+    // public function detailProduit(Product $product): Response
+    // {
+
+    //     return $this->render('product/detailProduit.html.twig', [
+    //         'product' => $product,
+    //     ]);
+    // }
+
+
+
+    /**
+     * @Route("/admin/product/add",name="ajoutProduit")
      */
     public function addProduct(KernelInterface $appKernel, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
@@ -73,7 +78,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/product/edit/{id}",name="editProduit")
+     * @Route("/admin/product/edit/{id}",name="editProduit")
      */
     public function editProduct(Request $request, EntityManagerInterface $em, $id): Response
     {
@@ -121,7 +126,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/product/delete/{id}",name="deleteProduit")
+     * @Route("/admin/product/delete/{id}",name="deleteProduit")
      */
     public function deleteProduct(Product $product, EntityManagerInterface $em)
     {
