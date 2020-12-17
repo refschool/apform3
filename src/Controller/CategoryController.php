@@ -32,6 +32,7 @@ class CategoryController extends AbstractController
      */
     public function productByCategory(ProductRepository $productRepository, $id): Response
     {
+
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
 
         $listeProduit = $productRepository->findBy(['Category' => $category]);
