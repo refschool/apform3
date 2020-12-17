@@ -21,9 +21,9 @@ class HomeController extends AbstractController
     public function index(EntityManagerInterface $em)
     {
         //Lister les produits
-        $listeProduit = $em->getRepository(Product::class)->findAll();
+        $listeProduits = $em->getRepository(Product::class)->findAll();
 
-        return $this->render('index.html.twig', ['liste' => $listeProduit]);
+        return $this->render('index.html.twig', ['listeProduits' => $listeProduits]);
     }
 
 
