@@ -17,7 +17,7 @@
             </li>
             {% endif %}
 
-            {% if app.user %}
+            {% if is_granted('ROLE_STAFF') %}
             <li class="nav-item">
                 <a class="nav-link" href="{{path('admin_category')}}">Liste catégories</a>
             </li>
