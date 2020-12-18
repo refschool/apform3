@@ -18,6 +18,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            access_denied_handler: App\Security\AccessDeniedHandler
             anonymous: true
             lazy: true
             provider: app_user_provider
@@ -39,4 +40,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }
-        #- { path: ^/profile, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_ADMIN }
