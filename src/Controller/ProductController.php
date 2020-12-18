@@ -91,13 +91,8 @@ class ProductController extends AbstractController
     public function editProduct(Request $request, EntityManagerInterface $em, $id): Response
     {
         $path = $this->getParameter('app.dir.public') . '/img';
-
-
         $product = $em->getRepository(Product::class)->find($id);
-
-
         $form = $this->createForm(ProductFormType::class, $product);
-
 
         $form->handleRequest($request);
 

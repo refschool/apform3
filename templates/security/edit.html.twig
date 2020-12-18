@@ -9,4 +9,24 @@
     {{form(form)}}
 
 </div>
+
+<script>
+
+    $(function () {
+        //check minimum password chars
+        let minChar = 3;//twig global
+
+        $("#user_form_save").on('click', function (e) {
+
+            let pass = $('#user_form_password').val()
+
+            if (pass.length !== 0 && pass.length < 3) {
+                e.preventDefault()
+                console.log(pass.length)
+                alert("le mot de passe doit faire plus de ", minChar, " caractères")
+            }
+        })
+    })
+</script>
+
 {% endblock %}
