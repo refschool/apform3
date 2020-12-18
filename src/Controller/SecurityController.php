@@ -50,4 +50,12 @@ class SecurityController extends AbstractController
             'userList' => $userList,
         ]);
     }
+
+    public function addUser()
+    {
+    }
+
+    public function editUser()
+    {
+    }
 }
