@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 class SecurityController extends AbstractController
 {
@@ -32,5 +35,19 @@ class SecurityController extends AbstractController
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    /**
+     * @Route("/profile/userlist", name="userList")
+     */
+    public function userList(UserRepository $userRepository)
+    {
+
+        // chercher tous les utilisateurs
+        $userList = $userRepository->findAll();
+        //afficher dans le twig
+        return $this->render('security/index.html.twig', [
+            'userList' => $userList,
+        ]);
     }
 }
