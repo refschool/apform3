@@ -22,7 +22,7 @@
             <td>{{user.email}}</td>
             <td>{{user.roles[0]}}</td>
             <td><a href="{{path('userEdit',{id:user.id})}}">Editer</a></td>
-            <td>Effacer User</td>
+            <td><a href="{{path('userDelete',{id:user.id})}}">Effacer User</a></td>
         </tr>
 
         <br>

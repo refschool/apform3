@@ -138,4 +138,20 @@ class SecurityController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("/profile/delete/{id}",name="userDelete")
+     */
+    public function deleteProduct(User $user, EntityManagerInterface $em)
+    {
+
+        // paramConverter
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Produit effacé avec succès');
+
+        return $this->redirectToRoute('userList', []);
+    }
 }
