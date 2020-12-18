@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Validator\EmptyOrMore;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Blank;
@@ -45,7 +46,7 @@ class UserFormType extends AbstractType
             ->add('password', TextType::class, [
                 'mapped' => false,
                 'required' => false,
-                'constraints' => new AtLeastOneOf([$blank, $length]),
+                'constraints' => new EmptyOrMore(),
             ])
             ->add('save', SubmitType::class);
     }

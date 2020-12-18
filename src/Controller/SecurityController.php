@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserFormType;
 use App\Form\UserFormType2;
 use App\Repository\UserRepository;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,7 +64,7 @@ class SecurityController extends AbstractController
     public function addUser(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User;
-        $form = $this->createForm(UserFormType2::class, $user);
+        $form = $this->createForm(UserFormType::class, $user);
 
 
         $form->handleRequest($request);
@@ -71,6 +72,12 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $form->getData();
+
+            $dateError = new FormError("Age must be greater than 18");
+            $form->get('password')->addError($dateError);
+
+
+
             $roles = $form->get('roles')->getData();
 
             $user->setRoles([0 => $roles]);
@@ -82,6 +89,9 @@ class SecurityController extends AbstractController
                 //encrypt pass
                 $password = $passwordEncoder->encodePassword($user, $plainPassword);
                 $user->setPassword($password);
+            } else {
+                $dateError = new FormError("Age must be greater than 18");
+                $form->get('password')->addError($dateError);
             }
 
             $em->persist($user);
