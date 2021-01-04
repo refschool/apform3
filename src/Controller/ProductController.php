@@ -147,4 +147,29 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('categoryProduct', ['id' => $idCategory]);
     }
+
+
+
+    /**
+     * liste le produits d'une catégorie
+     * @Route("/product/test/{id}", name="testProduit")
+     */
+    public function test(Product $product, EntityManagerInterface $em, $id): Response
+    {
+        // DQL
+        $query = $em->createQuery(
+            "
+            select p 
+            FROM App\Entity\Product p 
+            WHERE p.id =  :id
+            "
+        )->setParameter('id', $id);
+
+        $data = $query->getResult();
+        dd($data);
+
+        return $this->render('product/detailProduit.html.twig', [
+            'product' => $product,
+        ]);
+    }
 }

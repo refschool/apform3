@@ -15,20 +15,20 @@
         </tr>
         {% for produit in listeProduit %}
         <tr>
-            <td><a href="{{path('detailProduit',{'id':produit.id})}}">{{produit.name}}</a></td>
+            <td><a href="{{path('admin_detailProduit',{'id':produit.id})}}">{{produit.name}}</a></td>
             <td>{{produit.price}}</td>
-            <td><a href="{{path('editProduit',{'id':produit.id})}}">
+            <td><a href="{{path('admin_editProduit',{'id':produit.id})}}">
                     Editer Produit</a>
             </td>
             <td>
-                <a href="{{path('deleteProduit',{'id':produit.id})}}">
+                <a href="{{path('admin_deleteProduit',{'id':produit.id})}}">
                     Effacer Produit</a>
             </td>
         </tr>
 
         <br>
 
-        {% endfor  %}
+        {% endfor %}
     </table>
 
 
