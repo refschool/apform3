@@ -152,9 +152,9 @@ class ProductController extends AbstractController
 
     /**
      * liste le produits d'une catégorie
-     * @Route("/product/test/{id}", name="testProduit")
+     * @Route("/product/testDQL/{id}", name="testDQL")
      */
-    public function test(Product $product, EntityManagerInterface $em, $id): Response
+    public function testDQL(Product $product, EntityManagerInterface $em, $id): Response
     {
         // DQL
         $query = $em->createQuery(
@@ -162,6 +162,30 @@ class ProductController extends AbstractController
             select p 
             FROM App\Entity\Product p 
             WHERE p.id =  :id
+            "
+        )->setParameter('id', $id);
+
+        $data = $query->getResult();
+        dd($data);
+
+        return $this->render('product/detailProduit.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * liste le produits d'une catégorie
+     * @Route("/product/testDQLJoin/{id}", name="testDQLJoin")
+     */
+    public function testDQLJoin(Product $product, EntityManagerInterface $em, $id): Response
+    {
+        // DQL
+        $query = $em->createQuery(
+            "
+            select c,p 
+            FROM App\Entity\Category c 
+            JOIN c.products p
+            WHERE c.id =  :id
             "
         )->setParameter('id', $id);
 
