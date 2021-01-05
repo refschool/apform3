@@ -189,7 +189,8 @@ class ProductController extends AbstractController
             "
         )->setParameter('id', $id);
 
-        $data = $query->getResult();
+        // $data = $query->getArrayResult();
+        $data = $query->getResult()[0]->getProducts();
         dd($data);
 
         return $this->render('product/detailProduit.html.twig', [

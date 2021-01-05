@@ -95,4 +95,15 @@ class CategoryController extends AbstractController
 
         return $this->render('category/edit.html.twig', ['form' => $form->createView()]);
     }
+
+
+    /**
+     * @Route("/category/queryBuilderJoin/{id}",name="qbJoinCategory")
+     */
+    public function qbJoinCategory(Request $request, EntityManagerInterface $em, $id)
+    {
+
+        $category = $em->getRepository(Category::class)->findInnerJoin($id);
+        dd($category);
+    }
 }
