@@ -32,6 +32,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/category/product/{id}", name="categoryProduct")
+     * liste les produits d'une catégorie donnée
      */
     public function productByCategory(ProductRepository $productRepository, $id): Response
     {
