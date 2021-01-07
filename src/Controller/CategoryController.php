@@ -99,12 +99,30 @@ class CategoryController extends AbstractController
 
 
     /**
-     * @Route("/category/queryBuilderJoin/{id}",name="qbJoinCategory")
+     * @Route("/category/delete/{id}",name="deleteCategory")
      */
-    public function qbJoinCategory(Request $request, EntityManagerInterface $em, $id)
+    public function deleteCategory(Category $category, EntityManagerInterface $em)
     {
 
-        $category = $em->getRepository(Category::class)->findInnerJoin($id);
-        dd($category);
+        $em->remove($category);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_category', []);
     }
+
+
+
+
+
+
+
+    /**
+     * @Route("/category/queryBuilderJoin/{id}",name="qbJoinCategory")
+     */
+    // public function qbJoinCategory(Request $request, EntityManagerInterface $em, $id)
+    // {
+
+    //     $category = $em->getRepository(Category::class)->findInnerJoin($id);
+    //     dd($category);
+    // }
 }
