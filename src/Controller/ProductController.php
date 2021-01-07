@@ -26,7 +26,7 @@ class ProductController extends AbstractController
      * liste le produits d'une catégorie
      * @Route("/product/detail/{id}", name="detailProduit")
      */
-    public function categoryProductList(Product $product): Response
+    public function detailProduit(Product $product): Response
     {
         return $this->render('product/detailProduit.html.twig', [
             'product' => $product,
