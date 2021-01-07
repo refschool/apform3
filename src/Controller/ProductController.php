@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductFormType;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * @Route("/admin",name="admin_")
@@ -156,17 +158,36 @@ class ProductController extends AbstractController
      */
     public function testDQL(Product $product, EntityManagerInterface $em, $id): Response
     {
-        // DQL
-        $query = $em->createQuery(
-            "
-            select p 
-            FROM App\Entity\Product p 
-            WHERE p.id =  :id
-            "
-        )->setParameter('id', $id);
+        // expérimental
+        // $rsm = new ResultSetMapping();
+        // // build rsm here
+        // $query = $em->createNativeQuery('SELECT id, name FROM product WHERE id = 1', $rsm);
+        // //$query->setParameter(1, 1);
+        // $data = $query->getSingleResult();
+        // dd($data);
 
-        $data = $query->getResult();
-        dd($data);
+
+
+        // $rep = $em->getRepository(Product::class);
+        // $data = $rep->findSQLPure($id);
+        // dd($data);
+
+        // $rep = $em->getRepository(Product::class);
+        // $data = $rep->findOneBySomeField($id);
+        // dd($data);
+
+
+        // DQL
+        // $query = $em->createQuery(
+        //     "
+        //     select p 
+        //     FROM App\Entity\Product p 
+        //     WHERE p.id =  :id
+        //     "
+        // )->setParameter('id', $id);
+
+        // $data = $query->getOneOrNullResult(); //   ->getResult();
+        // dd($data);
 
         return $this->render('product/detailProduit.html.twig', [
             'product' => $product,
@@ -182,7 +203,7 @@ class ProductController extends AbstractController
         // DQL
         $query = $em->createQuery(
             "
-            select c,p 
+            select c, p 
             FROM App\Entity\Category c 
             JOIN c.products p
             WHERE c.id =  :id

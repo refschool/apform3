@@ -39,10 +39,32 @@ class ProductRepository extends ServiceEntityRepository
 
     public function findOneBySomeField($value): ?Product
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.id = :id')
-            ->setParameter('id', $value)
-            ->getQuery()
-            ->getOneOrNullResult();
+
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.id = :id');
+
+        if ($value == 1) {
+            $qb = $qb->setParameter('id', $value)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } else {
+            $qb = $qb->setParameter('id', $value + 1)
+                ->getQuery()
+                ->getOneOrNullResult();
+        }
+
+        return $qb;
+    }
+
+
+    public function findSQLPure($value)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT * FROM product P INNER JOIN category C ON C.id = P.category_id WHERE C.id = $value";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
     }
 }
