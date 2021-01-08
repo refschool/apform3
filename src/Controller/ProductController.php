@@ -14,6 +14,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * @Route("/admin",name="admin_")
@@ -158,13 +159,48 @@ class ProductController extends AbstractController
      */
     public function testDQL(Product $product, EntityManagerInterface $em, $id): Response
     {
+        $rsm = new ResultSetMappingBuilder($em);
+        // build rsm here
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Category', 'c');
+        $rsm->addJoinedEntityFromClassMetadata('App\Entity\Product', 'p', 'c', 'products');
+
+        $sql = "SELECT p.id, p.name  FROM category c 
+        INNER JOIN product p ON c.id = p.category_id
+        WHERE c.id = $id
+        ";
+
+        $query = $em->createNativeQuery($sql, $rsm);
+        //$query->setParameter(1, 1);
+        $data = $query->getResult(); //  ->getSingleResult();
+        dd($data);
+
         // expérimental
-        // $rsm = new ResultSetMapping();
-        // // build rsm here
-        // $query = $em->createNativeQuery('SELECT id, name FROM product WHERE id = 1', $rsm);
-        // //$query->setParameter(1, 1);
-        // $data = $query->getSingleResult();
-        // dd($data);
+        /*        $rsm = new ResultSetMappingBuilder($em);
+        // build rsm here
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Product', 'p');
+        $rsm->addJoinedEntityFromClassMetadata('App\Entity\Category', 'c', 'p', 'Category', ['id' => 'category_id', 'name' => 'product_name', 'slug' => 'product_slug']);
+
+        $sql = "SELECT p.id, p.name  FROM product p 
+        INNER JOIN category c ON c.id = p.category_id
+        WHERE p.id = $id
+        ";
+
+        $query = $em->createNativeQuery($sql, $rsm);
+        //$query->setParameter(1, 1);
+        $data = $query->getSingleResult();
+        dd($data->getCategory());*/
+
+
+        /*    $rsm = new ResultSetMappingBuilder($em);
+        // build rsm here
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Product', 'p');
+
+
+        $query = $em->createNativeQuery("SELECT id, name FROM product p WHERE id = $id", $rsm);
+        //$query->setParameter(1, 1);
+        $data = $query->getSingleResult();
+        dd($data);*/
+
 
 
 
