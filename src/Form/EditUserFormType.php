@@ -13,28 +13,35 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class UserFormType2 extends FormType
+class EditUserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $builder
+            ->add('email')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'User' => 'ROLE_USER',
+                    'Employé' => 'ROLE_STAFF',
+                    'Admin' => 'ROLE_ADMIN',
+                ],
+                'help' => 'Sélectionnez un rôle',
+                'multiple' => false,
+                'mapped' => false,
+            ])
             ->add('password', TextType::class, [
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
                     new Length([
                         'min' => 3,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
-                    ]),
-                ]
-            ]);
+                    ])
+                ],
+            ])
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

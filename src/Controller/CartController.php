@@ -21,7 +21,7 @@ class CartController extends AbstractController
 
         // Reformater la liste des produits du panier
         $cart_view = array_count_values($cart);
-        //dd($cart_view);
+        $newCart = null;
         // Boucle pour récupérer les produits à partir des ids
         foreach ($cart_view as $key => $value) {
             $newCart[] = [

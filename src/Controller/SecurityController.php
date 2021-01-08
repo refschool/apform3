@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserFormType;
 use App\Form\UserFormType2;
+use App\Form\EditUserFormType;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
@@ -117,7 +118,7 @@ class SecurityController extends AbstractController
     public function editUser(EntityManagerInterface $em, User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
 
-        $form = $this->createForm(UserFormType::class, $user);
+        $form = $this->createForm(EditUserFormType::class, $user);
         $form->handleRequest($request);
 
 
@@ -160,7 +161,7 @@ class SecurityController extends AbstractController
         $em->remove($user);
         $em->flush();
 
-        $this->addFlash('success', 'Produit effacé avec succès');
+        $this->addFlash('success', 'Utilisateur effacé avec succès');
 
         return $this->redirectToRoute('userList', []);
     }
