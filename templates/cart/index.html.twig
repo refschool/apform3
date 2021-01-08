@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <table class="table" style="border:1px black">
+        <thead>
+            <td>Image</td>
+            <td>Nom</td>
+            <td>Prix</td>
+            <td>Quantité</td>
+            <td>Sous-total</td>
+        </thead>
+        {% set total = 0 %}
+        {% for item in cart %}
+        <tr style="border:1px black">
+            <td><img class="" src="/img/{{item.produit.img}}" alt="Dét" width="100"></td>
+            <td>{{item.produit.name}}</td>
+            <td>{{item.produit.price / 100}}€</td>
+            <td>{{item.quantite}}</td>
+            <td> {% set sousTotal = (item.produit.price / 100) * item.quantite %} {{ sousTotal ~'€'}}</td>
+            {% set total = total + sousTotal %}
+        </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong>Total</strong></td>
+            <td> <strong> {{ total ~'€' }}</strong></td>
+        </tr>
+    </table>
+
+</div>
+{% endblock %}
