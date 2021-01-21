@@ -4,17 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductFormType;
+use App\Event\ProductAddSuccessEvent;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * @Route("/admin",name="admin_")
@@ -39,8 +41,13 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/add",name="ajoutProduit")
      */
-    public function addProduct(KernelInterface $appKernel, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
-    {
+    public function addProduct(
+        KernelInterface $appKernel,
+        Request $request,
+        EntityManagerInterface $em,
+        SluggerInterface $slugger,
+        EventDispatcherInterface $dispatcher
+    ): Response {
         //$path = $appKernel->getProjectDir() . '/public/img';
 
         $path = $this->getParameter('app.dir.public') . '/img';
@@ -80,7 +87,13 @@ class ProductController extends AbstractController
 
             $this->addFlash('success', 'Produit ajouté avec succès');
 
-            return $this->redirectToRoute('categoryProduct', ['id' => $idCategory]);
+            // Event 1ère étape :Emission d'un évenement ajout produit réussi
+            $productEvent = new ProductAddSuccessEvent($product);
+            $dispatcher->dispatch($productEvent, 'product.success');
+
+
+
+            return $this->redirectToRoute('admin_categoryProduct', ['id' => $idCategory]);
         }
 
         return $this->render('product/add.html.twig', [
