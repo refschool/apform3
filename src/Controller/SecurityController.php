@@ -67,44 +67,27 @@ class SecurityController extends AbstractController
         $user = new User;
         $form = $this->createForm(UserFormType::class, $user);
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $form->getData();
-
-            $dateError = new FormError("Age must be greater than 18");
-            $form->get('password')->addError($dateError);
-
-
-
             $roles = $form->get('roles')->getData();
-
             $user->setRoles([0 => $roles]);
-
             $plainPassword = $form['password']->getData();
-
-
             if (trim($plainPassword) != '') {
                 //encrypt pass
                 $password = $passwordEncoder->encodePassword($user, $plainPassword);
                 $user->setPassword($password);
             } else {
-                $dateError = new FormError("Age must be greater than 18");
-                $form->get('password')->addError($dateError);
             }
 
             $em->persist($user);
             $em->flush();
 
-
             $this->addFlash('success', 'Utilisateur créé avec succès');
-
             return $this->redirectToRoute('userList', []);
         }
-
-
 
         return $this->render('security/add.html.twig', [
             'form' => $form->createView(),
@@ -139,9 +122,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-
             $this->addFlash('success', 'Utilisateur mis à jour avec succès');
-
             return $this->redirectToRoute('userList', []);
         }
 
