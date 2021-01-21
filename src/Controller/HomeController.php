@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Entity\Category;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
-use App\Repository\ProductRepository;
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,9 +44,6 @@ class HomeController extends AbstractController
         ]);
     }
 
-
-
-
     /**
      * @Route("/success",name="success")
      *  */
@@ -72,5 +67,24 @@ class HomeController extends AbstractController
         $this->mailer->send($email);
 
         return new Response("Email envoyé");
+    }
+
+    /**
+     * @Route("/sendmailtwig",name="sendMailTwig")
+     *  */
+    public function sendMailTwig()
+    {
+        $contenu = "Contenu email Twig";
+
+        $email = new TemplatedEmail();
+        $email->from(new Address("noreply@test.com", "test"))
+            ->to("yvon.huynh@gmail.com")
+            ->htmlTemplate("emails/emailTemplate.html.twig")
+            ->context(['contenu' => $contenu])
+            ->subject("Sujet du mail twig");
+
+        $this->mailer->send($email);
+
+        return new Response("Email twig envoyé");
     }
 }
