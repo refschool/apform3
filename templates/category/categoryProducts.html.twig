@@ -20,7 +20,8 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" id="fermer">Annuler</a>
-                    <a class="btn btn-primary" href="/admin/produit/delete/">Confirmer</a>
+                    <a id="confirmer" class="btn btn-primary"
+                        href="{{path('admin_deleteProduit',{'id':0})}}">Confirmer</a>
                 </div>
             </div>
         </div>
@@ -58,10 +59,14 @@
         $(function () {
 
             //gestion click sur lien Effacer
-
             $('.table').on('click', function (event) {
 
+                // populer la modale avec le lien d'effacement
                 $('.modal').show()
+
+                let id = $(event.target).attr('id')
+                $('#confirmer').attr('href', '/admin/product/delete/' + id)
+
 
             })
 
