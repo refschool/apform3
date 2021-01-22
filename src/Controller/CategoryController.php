@@ -111,11 +111,6 @@ class CategoryController extends AbstractController
     }
 
 
-
-
-
-
-
     /**
      * @Route("/category/queryBuilderJoin/{id}",name="qbJoinCategory")
      */

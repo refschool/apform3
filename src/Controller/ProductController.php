@@ -161,7 +161,7 @@ class ProductController extends AbstractController
 
         $this->addFlash('success', 'Produit effacé avec succès');
 
-        return $this->redirectToRoute('categoryProduct', ['id' => $idCategory]);
+        return $this->redirectToRoute('admin_categoryProduct', ['id' => $idCategory]);
     }
 
 
