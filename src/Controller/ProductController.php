@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Form\ProductFormType;
 use App\Event\ProductAddSuccessEvent;
 use App\Repository\ProductRepository;
+use App\Event\ProductDeleteSuccessEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,8 +90,7 @@ class ProductController extends AbstractController
 
             // Event 1ère étape :Emission d'un évenement ajout produit réussi
             $productEvent = new ProductAddSuccessEvent($product);
-            $dispatcher->dispatch($productEvent, 'product.success');
-
+            $dispatcher->dispatch($productEvent, 'productAdd.success');
 
 
             return $this->redirectToRoute('admin_categoryProduct', ['id' => $idCategory]);
@@ -147,8 +147,11 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/delete/{id}",name="deleteProduit")
      */
-    public function deleteProduct(Product $product, EntityManagerInterface $em)
-    {
+    public function deleteProduct(
+        Product $product,
+        EntityManagerInterface $em,
+        EventDispatcherInterface $dispatcher
+    ) {
         // public function deleteProduct(ProductRepository $productRepository, $id, EntityManagerInterface $em)
 
         //$product = $productRepository->find($id);
@@ -158,6 +161,10 @@ class ProductController extends AbstractController
         // paramConverter
         $em->remove($product);
         $em->flush();
+
+        // Event 1ère étape :Emission d'un évenement ajout produit réussi
+        $productEvent = new ProductDeleteSuccessEvent($product);
+        $dispatcher->dispatch($productEvent, 'productDelete.success');
 
         $this->addFlash('success', 'Produit effacé avec succès');
 
