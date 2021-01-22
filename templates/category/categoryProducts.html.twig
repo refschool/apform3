@@ -21,7 +21,7 @@
                 <div class="modal-footer">
                     <a href="#" id="fermer">Annuler</a>
                     <a id="confirmer" class="btn btn-primary"
-                        href="{{path('admin_deleteProduit',{'id':0})}}">Confirmer</a>
+                        href="{{path('admin_deleteProduit',{'id':' '})}}">Confirmer</a>
                 </div>
             </div>
         </div>
@@ -58,6 +58,8 @@
     <script>
         $(function () {
 
+            let originalUrl = $('#confirmer').attr('href')
+
             //gestion click sur lien Effacer
             $('.table').on('click', function (event) {
 
@@ -65,7 +67,14 @@
                 $('.modal').show()
 
                 let id = $(event.target).attr('id')
-                $('#confirmer').attr('href', '/admin/product/delete/' + id)
+
+                let deleteurl = $('#confirmer').attr('href')
+                deleteurl = decodeURI(deleteurl).trim()
+
+                console.log("l' url de la modale est ", deleteurl)
+
+
+                $('#confirmer').attr('href', deleteurl + id)
 
 
             })
@@ -74,6 +83,7 @@
             //cacher la modale
             $('#fermer').on('click', function (event) {
                 $('.modal').hide()
+                $('#confirmer').attr('href', originalUrl)
             })
 
 
